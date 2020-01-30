@@ -5,6 +5,12 @@
  */
 package calcv2_server;
 
+import java.io.IOException;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author luis-
@@ -30,8 +36,7 @@ public class ServerUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnInicio = new javax.swing.JToggleButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jLabel2 = new javax.swing.JLabel();
+        btnPuerto = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,14 +49,12 @@ public class ServerUI extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setText("Cambiar Puerto");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnPuerto.setText("Cambiar Puerto");
+        btnPuerto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                btnPuertoActionPerformed(evt);
             }
         });
-
-        jLabel2.setText("Se reiniciará el server (?)");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -65,22 +68,18 @@ public class ServerUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnInicio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jToggleButton1))
-                .addGap(15, 15, 15))
+                .addComponent(btnPuerto)
+                .addGap(27, 27, 27))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jLabel1)
-                .addGap(36, 36, 36)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(61, 61, 61)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInicio)
-                    .addComponent(jToggleButton1))
+                    .addComponent(btnPuerto))
                 .addContainerGap(152, Short.MAX_VALUE))
         );
 
@@ -99,12 +98,18 @@ public class ServerUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        // TODO add your handling code here:
+
+        ServerInit.conexion();
+
     }//GEN-LAST:event_btnInicioActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    private void btnPuertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuertoActionPerformed
+
+        int newport = Integer.parseInt(JOptionPane.showInputDialog("Introduce el nuevo puerto: "));
+
+        ServerInit.port = newport;
+
+    }//GEN-LAST:event_btnPuertoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,9 +148,8 @@ public class ServerUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnInicio;
+    private javax.swing.JToggleButton btnPuerto;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

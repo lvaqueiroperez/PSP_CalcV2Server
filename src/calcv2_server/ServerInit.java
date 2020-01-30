@@ -7,11 +7,15 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import javax.swing.JOptionPane;
 
-public class ServerHilo {
+public class ServerInit {
 
     //Hacemos atributos para poder usarlos en cualquier método
-    //no deja crear objeto ServerSocket??
+    //NO DEJA CREAR UN OBJETO SERVER SOCKET FUERA DE MÉTODOS, SE HA IMPLEMENTADO
+    //EL CAMBIO DE PUERTO DENTRO DEL MÉTODO CONEXIÓN
+    public static int port = 5555;
+
     public static void conexion() {
 
         try {
@@ -21,9 +25,12 @@ public class ServerHilo {
 
             System.out.println("***** Realizando el bind *****");
 
-            InetSocketAddress addr = new InetSocketAddress("localhost", 5555);
+            InetSocketAddress addr = new InetSocketAddress("localhost", port);
             serverSocket.bind(addr);
 
+            System.out.println("***** Puerto predeterminado: 5555 *****");
+
+            //
             System.out.println("****** Aceptando conexiones ******");
 
             Socket newSocket = serverSocket.accept();
@@ -84,19 +91,13 @@ public class ServerHilo {
 
             newSocket.close();
 
-            //BUCLE QUE PERMITA ESCOGER SI QUEREMOS SEGUIR O NO?
-            System.out.println("***** Cerrando el socket servidor *****");
+            System.out.println("***** Cerrando server *****");
 
             serverSocket.close();
 
-            System.out.println("***** Terminado *****");
-
+            //BUCLE QUE PERMITA ESCOGER SI QUEREMOS SEGUIR O NO?
         } catch (IOException e) {
         }
-
-    }
-
-    public static void desconexion() {
 
     }
 

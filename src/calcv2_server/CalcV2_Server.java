@@ -10,14 +10,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class CalcV2_Server {
-    
+
     public static void main(String[] args) {
-        
+
         ServerUI obj = new ServerUI();
         obj.setVisible(true);
-        
-        
-        
+
     }
-    
+
 }
