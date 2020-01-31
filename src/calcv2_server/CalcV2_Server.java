@@ -11,7 +11,11 @@ import java.net.Socket;
 
 public class CalcV2_Server {
 
-    public static void main(String[] args) {
+    public static int port = 5555;
+
+    public static int serverStatus = 1;
+
+    public static void main(String[] args) throws IOException {
 
         ServerUI obj = new ServerUI();
         obj.setVisible(true);
