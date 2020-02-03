@@ -14,21 +14,40 @@ import javax.swing.JOptionPane;
 //NO DEJA CREAR UN OBJETO SERVER SOCKET FUERA DE MÉTODOS
 
 public class ServerHilos extends Thread {
+
     //Creamos un nuevo socket para ir recibiendo a los clientes
     private Socket newSocket;
-
+    //PROBAR A ARREGLAR EL "NULL POINTER EXCEPTION" IDENTIFICANDO CADA HILO CON ALGO MÁS, VER TUTORIAL
+    //http://www.webtutoriales.com/articulos/comunicacion-entre-un-servidor-y-multiples-clientes
     @Override
     public void run() {
 
         try {
+
+            System.out.println("EJECUTANDO HILO CLIENTE");
+
             //DEVUELVE UN INPUT/OUTPUT STREAM PARA LEER/ESCRIBIR BYTES !!!
             InputStream is = newSocket.getInputStream();
             OutputStream os = newSocket.getOutputStream();
+            
+            //LEEMOS
+            
+            int op1 = is.read();
+            System.out.println(op1);
+            
+            int op2 = is.read();
+            System.out.println(op2);
+            
+            int oper = is.read();
+            System.out.println(oper);
+            
+            //CERRAMOS SOCKET
+            System.out.println("***** CERRANDO SOCKET *****");
+            newSocket.close();
+
         } catch (IOException ex) {
             Logger.getLogger(ServerHilos.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        System.out.println("EJECUTANDO HILO CLIENTE");
 
     }
 

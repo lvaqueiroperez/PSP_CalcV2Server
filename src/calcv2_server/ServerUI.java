@@ -161,7 +161,7 @@ public class ServerUI extends javax.swing.JFrame {
                 //CONTROLAR QUE EL SERVER SE CIERRE CUANDO NOSOTROS QUERAMOS TRAS ACABAR UNA CONEXIÓN
                 if (serverStatus == 0) {
 
-                    System.out.println("***** CERRANDO *****");
+                    System.out.println("***** CERRANDO SERVER *****");
                     serverSocket.close();
 
                 }
