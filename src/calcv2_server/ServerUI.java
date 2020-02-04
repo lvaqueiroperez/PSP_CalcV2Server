@@ -149,14 +149,16 @@ public class ServerUI extends javax.swing.JFrame {
         conexiones, el server se apagase directamente
              */
             //la variable "serverStatus" se controlará por UI (un botón)
+            
+            int n = 1;
             while (serverStatus != 0) {
-
+                
                 System.out.println("****** Aceptando conexiones ******");
-
+                //PONER EL SOCKET COMO PARÁMETRO DEL HILO PARA DIFERENCIARLOS (?)
                 Socket newSocket = serverSocket.accept();
 
                 //Empiezan los hilos (clientes), un hilo para cada conexión 
-                ServerHilos c1 = new ServerHilos();
+                ServerHilos c1 = new ServerHilos(newSocket,n);
                 c1.start();
                 //CONTROLAR QUE EL SERVER SE CIERRE CUANDO NOSOTROS QUERAMOS TRAS ACABAR UNA CONEXIÓN
                 if (serverStatus == 0) {
@@ -165,6 +167,8 @@ public class ServerUI extends javax.swing.JFrame {
                     serverSocket.close();
 
                 }
+                
+                n++;
             }
 
         } catch (IOException ex) {

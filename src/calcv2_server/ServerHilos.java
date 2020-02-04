@@ -1,6 +1,8 @@
 package calcv2_server;
 
 //CLASE CON MÉTODOS STATIC A LA QUE ACCEDERÁ EL CÓDIGO DE LA UI PARA TRABAJAR00
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,8 +19,29 @@ public class ServerHilos extends Thread {
 
     //Creamos un nuevo socket para ir recibiendo a los clientes
     private Socket newSocket;
+    private Socket socket;
+    private int id;
+    private OutputStream os;
+    private InputStream is;
     //PROBAR A ARREGLAR EL "NULL POINTER EXCEPTION" IDENTIFICANDO CADA HILO CON ALGO MÁS, VER TUTORIAL
     //http://www.webtutoriales.com/articulos/comunicacion-entre-un-servidor-y-multiples-clientes
+
+    //CONSTRUCTOR
+    public ServerHilos(Socket socket, int id) {
+
+        this.socket = socket;
+        this.id = id;
+        //DENTRO DEL CONSTRUCTOR, PONEMOS OS IS/OS, DEMANERA QUE CADA HILO TENDRÁ EL SUYO DIFERENCIADO
+        try {
+            os = socket.getOutputStream();
+
+            is = socket.getInputStream();
+        } catch (IOException ex) {
+            Logger.getLogger(ServerHilos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     @Override
     public void run() {
 
@@ -26,32 +49,41 @@ public class ServerHilos extends Thread {
 
             System.out.println("EJECUTANDO HILO CLIENTE");
 
-            //DEVUELVE UN INPUT/OUTPUT STREAM PARA LEER/ESCRIBIR BYTES !!!
-            InputStream is = newSocket.getInputStream();
-            OutputStream os = newSocket.getOutputStream();
-            
-            //LEEMOS
-            
+            //LEEMOS (SI VEMOS QUE HAY PROBLEMAS CON LOS INTS, LEER CON BYTES)
             int op1 = is.read();
             System.out.println(op1);
-            
+
+            try {
+                sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ServerHilos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             int op2 = is.read();
             System.out.println(op2);
-            
+
+            try {
+                sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ServerHilos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             int oper = is.read();
             System.out.println(oper);
-            
+
             //CERRAMOS SOCKET
             System.out.println("***** CERRANDO SOCKET *****");
             newSocket.close();
 
         } catch (IOException ex) {
-            Logger.getLogger(ServerHilos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServerHilos.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
 }
+
 //try {
 //           
 //            //
