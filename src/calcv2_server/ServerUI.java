@@ -32,6 +32,7 @@ public class ServerUI extends javax.swing.JFrame {
      */
     public ServerUI() {
         initComponents();
+
     }
 
     /**
@@ -47,8 +48,8 @@ public class ServerUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnInicio = new javax.swing.JToggleButton();
         btnPuerto = new javax.swing.JToggleButton();
-        btnCerrar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,50 +69,43 @@ public class ServerUI extends javax.swing.JFrame {
             }
         });
 
-        btnCerrar.setText("CERRAR");
-        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("?");
+        jLabel3.setText("Debe estar apagado !");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnInicio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
-                .addComponent(btnPuerto)
-                .addGap(27, 27, 27))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(164, 164, 164)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(btnCerrar))
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnInicio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(btnPuerto))
+                .addGap(27, 27, 27))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jLabel1)
-                .addGap(61, 61, 61)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInicio)
                     .addComponent(btnPuerto))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCerrar)
-                .addGap(70, 70, 70))
+                .addGap(105, 105, 105))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -138,9 +132,9 @@ public class ServerUI extends javax.swing.JFrame {
             ServerSocket serverSocket = new ServerSocket();
             InetSocketAddress addr = new InetSocketAddress("localhost", port);
 
-            serverSocket.bind(addr);
-
             System.out.println("***** Realizando el bind *****");
+
+            serverSocket.bind(addr);
 
             System.out.println("***** Puerto: " + port + " *****");
 
@@ -148,17 +142,15 @@ public class ServerUI extends javax.swing.JFrame {
         podríamos poner != null para que, cuando serverSocket deje de recibir
         conexiones, el server se apagase directamente
              */
-            //la variable "serverStatus" se controlará por UI (un botón)
-            
             int n = 1;
             while (serverStatus != 0) {
-                
+
                 System.out.println("****** Aceptando conexiones ******");
                 //PONER EL SOCKET COMO PARÁMETRO DEL HILO PARA DIFERENCIARLOS (?)
                 Socket newSocket = serverSocket.accept();
 
                 //Empiezan los hilos (clientes), un hilo para cada conexión 
-                ServerHilos c1 = new ServerHilos(newSocket,n);
+                ServerHilos c1 = new ServerHilos(newSocket, n);
                 c1.start();
                 //CONTROLAR QUE EL SERVER SE CIERRE CUANDO NOSOTROS QUERAMOS TRAS ACABAR UNA CONEXIÓN
                 if (serverStatus == 0) {
@@ -167,7 +159,7 @@ public class ServerUI extends javax.swing.JFrame {
                     serverSocket.close();
 
                 }
-                
+
                 n++;
             }
 
@@ -188,12 +180,6 @@ public class ServerUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnPuertoActionPerformed
-
-    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-
-        CalcV2_Server.serverStatus = 0;
-
-    }//GEN-LAST:event_btnCerrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,11 +217,11 @@ public class ServerUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCerrar;
     private javax.swing.JToggleButton btnInicio;
     private javax.swing.JToggleButton btnPuerto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

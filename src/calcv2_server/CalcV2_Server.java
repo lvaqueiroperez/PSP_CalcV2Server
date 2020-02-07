@@ -11,6 +11,7 @@ import java.net.Socket;
 
 public class CalcV2_Server {
 
+    //POR DEFECTO
     public static int port = 5555;
 
     public static int serverStatus = 1;
